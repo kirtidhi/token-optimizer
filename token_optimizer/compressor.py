@@ -6,6 +6,7 @@ Includes smart truncators for massive documents (e.g., SEC filings) and regex pr
 for stripping standard legal boilerplate.
 """
 import logging
+import re
 from typing import Optional
 from .counter import counter
 
@@ -62,7 +63,6 @@ class RegexPruner(Compressor):
     Removes patterns that are known to be safe to delete (e.g., standard disclaimers).
     """
     def __init__(self, patterns: list[str]):
-        import re
         super().__init__()
         self.patterns = [re.compile(p, re.IGNORECASE | re.MULTILINE) for p in patterns]
 

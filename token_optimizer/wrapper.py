@@ -42,22 +42,22 @@ class TokenOptimizer:
         
         logger.info(f"Pre-flight token estimation: {estimated_prompt_tokens} tokens")
         
-        # 1. Budget Check
-        if self.budget_tracker:
-            if not self.budget_tracker.check_budget(estimated_prompt_tokens, is_prompt=True):
-                raise ValueError("Token budget exceeded before making the call.")
-
-        # 2. Compression (if enabled and prompt is too large)
+        # 1. Compression (if enabled and prompt is too large)
         if self.compress_above and estimated_prompt_tokens > self.compress_above:
             logger.info(f"Prompt > {self.compress_above} tokens. Triggering compression...")
             prompt = self._compressor.compress(prompt)
             estimated_prompt_tokens = counter.count_tokens(prompt) + counter.count_tokens(system_instruction)
             
-        # 3. Cache Check (if enabled)
+        # 2. Cache Check (if enabled)
         if self.use_cache and self._cache:
             cached_result = self._cache.get(prompt, system_instruction)
             if cached_result:
                 return cached_result[0], cached_result[1]
+                
+        # 3. Budget Check
+        if self.budget_tracker:
+            if not self.budget_tracker.check_budget(estimated_prompt_tokens, is_prompt=True):
+                raise ValueError("Token budget exceeded before making the call.")
 
         # 4. Actual Provider Call
         try:
@@ -80,7 +80,8 @@ class TokenOptimizer:
             self.budget_tracker.add_usage(actual_prompt_tokens, actual_completion_tokens)
             
         # Optional: Print estimated cost
-        cost = counter.estimate_cost(actual_prompt_tokens, actual_completion_tokens)
+        model_name = kwargs.get("model") or getattr(self.provider, "model", None)
+        cost = counter.estimate_cost(actual_prompt_tokens, actual_completion_tokens, model=model_name)
         logger.info(f"Run Cost Estimate: ${cost:.5f} | Total Tokens: {actual_prompt_tokens + actual_completion_tokens}")
 
         # 6. Cache Save (if enabled)

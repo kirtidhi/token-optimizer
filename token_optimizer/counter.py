@@ -46,6 +46,8 @@ class TokenCounter:
             "gpt-4o": {"prompt": 0.005, "completion": 0.015},
             "gemini-1.5-pro": {"prompt": 0.0035, "completion": 0.0105},
             "gemini-1.5-flash": {"prompt": 0.000075, "completion": 0.0003},
+            "gemini-3.1-pro-preview": {"prompt": 0.00125, "completion": 0.005},
+            "claude-sonnet-4-6": {"prompt": 0.003, "completion": 0.015},
         }
         
         rate = rates.get(model_to_use, rates["gpt-4o"]) # Fallback to 4o prices
