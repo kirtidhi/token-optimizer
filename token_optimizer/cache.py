@@ -1,6 +1,9 @@
 """
+cache.py - Token Optimization Engine
+
 Caching module to prevent re-calling the LLM for identical prompts.
-Uses diskcache for persistence across runs, falling back to an in-memory dict.
+Provides massive ROI during iterative development by using `diskcache` 
+for persistent state across runs, while gracefully falling back to an in-memory dict.
 """
 import hashlib
 import json

@@ -1,5 +1,9 @@
 """
-Drop-in decorator/wrapper for any generate() call.
+wrapper.py - Token Optimization Engine
+
+The core integration point. Provides a drop-in `TokenOptimizer` decorator/wrapper
+for any standard LLM provider's `generate()` call. Implements the orchestrator pattern
+to silently apply budget checks, caching, and compression without altering upstream logic.
 """
 import logging
 from typing import Optional, Any

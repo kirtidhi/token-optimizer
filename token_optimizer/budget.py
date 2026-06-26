@@ -1,5 +1,9 @@
 """
+budget.py - Token Optimization Engine
+
 Per-phase budget tracking and alerts.
+Protects the LLM pipeline from runaway token consumption by enforcing
+strict caps on total tokens and prompt-specific limits before API calls are made.
 """
 from pydantic import BaseModel
 from typing import Optional

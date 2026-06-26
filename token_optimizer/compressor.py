@@ -1,5 +1,9 @@
 """
-Compressors and Truncators to reduce prompt sizes before hitting the LLM.
+compressor.py - Token Optimization Engine
+
+Heuristic and semantic compressors designed to reduce prompt sizes before hitting the LLM.
+Includes smart truncators for massive documents (e.g., SEC filings) and regex pruners 
+for stripping standard legal boilerplate.
 """
 import logging
 from typing import Optional

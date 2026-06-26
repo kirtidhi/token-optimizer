@@ -1,6 +1,9 @@
 """
-Token counting utilities for various LLM providers.
-Everything in the token optimizer depends on accurate pre-flight counting.
+counter.py - Token Optimization Engine
+
+Core token counting and cost estimation utilities for various LLM providers.
+Everything in the token optimizer depends on accurate pre-flight counting to 
+prevent context-window overflows and track budget consumption.
 """
 import tiktoken
 from typing import Optional
