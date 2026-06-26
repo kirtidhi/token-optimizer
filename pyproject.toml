@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "token-optimizer"
+version = "0.1.0"
+authors = [
+  { name="kirtidhi", email="kirtidhi@example.com" },
+]
+description = "Provider-agnostic token budget management and compression for LLM pipelines."
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "tiktoken>=0.6.0",
+    "google-genai>=0.1.0",
+    "pydantic>=2.0.0",
+    "diskcache>=5.6.3"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/kirtidhi/token-optimizer"

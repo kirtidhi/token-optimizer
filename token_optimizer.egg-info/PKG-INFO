@@ -1,0 +1,27 @@
+Metadata-Version: 2.4
+Name: token-optimizer
+Version: 0.1.0
+Summary: Provider-agnostic token budget management and compression for LLM pipelines.
+Author-email: kirtidhi <kirtidhi@example.com>
+Project-URL: Homepage, https://github.com/kirtidhi/token-optimizer
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: tiktoken>=0.6.0
+Requires-Dist: google-genai>=0.1.0
+Requires-Dist: pydantic>=2.0.0
+Requires-Dist: diskcache>=5.6.3
+
+# Token Optimizer
+
+Provider-agnostic token budget management, caching, and compression for LLM pipelines.
+
+## Features
+- **Budget Tracking**: Stops runs before they exceed token limits.
+- **Caching**: Disk-based persistent cache to avoid re-evaluating unchanged prompts.
+- **Compression**: Smart truncation and regex pruning to shrink context size safely.
+- **Seamless Wrapper**: Drops into any codebase with zero refactoring.
+
+## Installation
+```bash
+pip install token-optimizer
+```
