@@ -24,10 +24,8 @@ def test_estimate_cost_gemini():
 def test_estimate_cost_claude():
     counter = TokenCounter()
     cost = counter.estimate_cost(prompt_tokens=1000, completion_tokens=1000, model="claude-sonnet-4-6")
-    # Using claude-3-5-sonnet pricing assuming it's identical or what counter implemented.
-    # We should actually check counter.py, let's just make sure it returns something greater than 0, or check exactly.
-    # We'll check the exact amount from counter.py, but actually if the exact isn't 0.015 we can just check > 0
-    assert cost > 0
+    # claude-sonnet-4-6: $0.003/1K prompt + $0.015/1K completion = $0.018 total
+    assert abs(cost - 0.018) < 0.0001
 
 def test_estimate_cost_unknown_model():
     counter = TokenCounter()

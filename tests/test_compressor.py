@@ -17,3 +17,11 @@ def test_smart_truncator_compress():
     # Should be truncated
     assert len(compressed) < len(text)
     assert compressed.endswith("...") or compressed.startswith("...") or "..." in compressed
+
+def test_regex_pruner():
+    from token_optimizer.compressor import RegexPruner
+    pruner = RegexPruner(patterns=[
+        r"REMOVE THIS",    # deletion
+    ])
+    result = pruner.compress("hello world REMOVE THIS end")
+    assert result == "hello world  end"
