@@ -60,16 +60,22 @@ class SmartTruncator(Compressor):
 
 class RegexPruner(Compressor):
     """
-    Removes patterns that are known to be safe to delete (e.g., standard disclaimers).
+    Removes or substitutes patterns that are known to be safe to modify.
+    Patterns can be a string (for deletion) or a tuple of (pattern, replacement).
     """
-    def __init__(self, patterns: list[str]):
+    def __init__(self, patterns: list):
         super().__init__()
-        self.patterns = [re.compile(p, re.IGNORECASE | re.MULTILINE) for p in patterns]
+        self.patterns = []
+        for p in patterns:
+            if isinstance(p, tuple):
+                self.patterns.append((re.compile(p[0], re.IGNORECASE | re.MULTILINE), p[1]))
+            else:
+                self.patterns.append((re.compile(p, re.IGNORECASE | re.MULTILINE), ""))
 
     def compress(self, text: str) -> str:
         original_length = len(text)
-        for pattern in self.patterns:
-            text = pattern.sub("", text)
+        for pattern, repl in self.patterns:
+            text = pattern.sub(repl, text)
         
         if len(text) < original_length:
             logger.info(f"RegexPruner removed {original_length - len(text)} characters.")

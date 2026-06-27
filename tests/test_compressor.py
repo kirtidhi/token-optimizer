@@ -1,5 +1,5 @@
 import pytest
-from token_optimizer.compressor import SmartTruncator
+from token_optimizer.compressor import SmartTruncator, RegexPruner
 
 def test_smart_truncator_passthrough():
     truncator = SmartTruncator(target_tokens=1000, keep_ratio=1.0)
@@ -19,9 +19,9 @@ def test_smart_truncator_compress():
     assert compressed.endswith("...") or compressed.startswith("...") or "..." in compressed
 
 def test_regex_pruner():
-    from token_optimizer.compressor import RegexPruner
     pruner = RegexPruner(patterns=[
-        r"REMOVE THIS",    # deletion
+        r"REMOVE THIS",      # deletion
+        (r"\s+", " "),       # substitution - collapse whitespace
     ])
-    result = pruner.compress("hello world REMOVE THIS end")
-    assert result == "hello world  end"
+    result = pruner.compress("hello   world REMOVE THIS end")
+    assert result == "hello world end"
