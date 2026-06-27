@@ -17,6 +17,7 @@ def test_cache_hit_and_miss():
     assert miss is None
 
 def test_cache_ttl():
+    pytest.importorskip("diskcache")
     # diskcache supports ttl. We'll use a temporary directory
     with tempfile.TemporaryDirectory() as tmpdir:
         # TTL of 1 second
